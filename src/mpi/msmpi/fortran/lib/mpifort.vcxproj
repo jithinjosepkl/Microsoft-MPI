@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(EnvironmentConfig)" />
+  <Import Project="$(SrcRoot)\mpi.props" />
+  <Import Project="$(SrcRoot)\mpi.targets" />
+
+  <PropertyGroup Label="Globals">
+    <TargetName>mpifort</TargetName>
+    <ProjectGuid>{a4085965-a1a1-4f4b-a5fd-f3b8da759e82}</ProjectGuid>
+  </PropertyGroup>
+
+  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.Default.props" />
+  
+  <PropertyGroup Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  
+  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(PUBLIC_WDK)\build\WindowsDriver.Default.props" />
+  
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories);
+        $(MPI_SRC_ROOT)\msmpi\include;
+        $(MPI_SRC_ROOT)\msmpi\dbg
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>
+        %(PreprocessorDefinitions);
+        USE_FORT_CDECL=1
+      </PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemGroup>
+    <ClCompile Include="..\mpif.cpp" />
+  </ItemGroup>
+  
+  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(PkgWindowsSdk_Corext)\build\WindowsDriver.Common.targets" />
+
+  <ItemGroup>
+    <ForCompile Include="..\setbotf.f" />
+  </ItemGroup>
+
+</Project>

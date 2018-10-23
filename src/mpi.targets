@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="CompileFortran"
+          AfterTargets="ClCompile"
+          Inputs="@(ForCompile)"
+          Outputs="@(ForCompile->'$(O)%(FileName).obj')">
+    <PropertyGroup Condition="'$(BuildArchitecture)'=='i386'">
+      <IFort_Flags>$(IFort_Flags) /D_X86_=1 /Di386=1</IFort_Flags>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(BuildArchitecture)'=='amd64'">
+      <IFort_Flags>$(IFort_Flags) /D_WIN64 /D_AMD64_ /DAMD64</IFort_Flags>
+    </PropertyGroup>
+
+    <Exec Condition="'$(CompileFortranFilesIndividually)'!='1'"
+          Command="$(INTEL_FORTRAN_ROOT)\$(BuildArchitecture)\ifort.exe /I$(MPI_INC_ROOT) /I$(MPI_INC_ARCH_ROOT) /Z7 /fpp /Zl $(IFort_Flags) /names:lowercase /Qdiag-disable:vec -c @(ForCompile->'&quot;%(Identity)&quot;', ' ') -Fo$(O)"
+          />
+    <Exec Condition="'$(CompileFortranFilesIndividually)'=='1'"
+          Command="$(INTEL_FORTRAN_ROOT)\$(BuildArchitecture)\ifort.exe /I$(MPI_INC_ROOT) /I$(MPI_INC_ARCH_ROOT) /Z7 /fpp /Zl $(IFort_Flags) /names:lowercase /Qdiag-disable:vec -c %(ForCompile.Identity) -Fo$(O)"
+          />
+
+    <ItemGroup>
+      <Lib Condition="'$(ConfigurationType)'=='StaticLibrary'" Include="@(ForCompile->'$(O)\%(Filename).obj')" />
+    </ItemGroup>
+  </Target>
+
+
+  <ItemGroup>
+    <MSBuildProperties Include="BuildType=$(BuildType);
+                                Configuration=$(Configuration);
+                                Platform=$(Platform);
+                                BuildArchitecture=$(BuildArchitecture);
+                                BuildFromTopDir=1" />
+    <MSBuildOtherProps Include="BuildType=$(BuildType);
+                                Configuration=$(Configuration);
+                                Platform=$(OtherPlatform);
+                                BuildArchitecture=$(OtherArchitecture);
+                                BuildFromTopDir=1;" />
+
+    <TraceManifestInputs Include="$(MPI_SRC_ROOT)\common\mpitrace.man"/>
+    <TraceManifestOutputs Include="$(MPI_SRC_ROOT)\common\$(O)\MpiTraceEvents.h;
+                                   $(MPI_SRC_ROOT)\common\$(O)\MpiTraceEvents.rc" />
+
+    <MSMPIInputs Include="$(MPI_SRC_ROOT)\**\*.cpp;
+                          $(MPI_SRC_ROOT)\**\*.c;
+                          $(MPI_SRC_ROOT)\**\*.h;
+                          $(MPI_SRC_ROOT)\**\*.inl;
+                          $(MPI_SRC_ROOT)\**\*.idl;
+                          $(MPI_SRC_ROOT)\**\*.acf;
+                          $(MPI_SRC_ROOT)\**\*.mc;
+                          $(MPI_SRC_ROOT)\**\*.rc;
+                          $(MPI_SRC_ROOT)\common\mpitrace.man;
+                          $(MPI_SRC_ROOT)\common\extracterrmsgs;
+                          $(MPI_SRC_ROOT)\common\errnames.txt"
+                 Exclude="$(MPI_SRC_ROOT)\**\obj*\**\*"/>
+
+    <MSMPIOutputs Include="$(BinariesBuildTypeArchDirectory)\smpd\smpd.exe;
+                           $(BinariesBuildTypeArchDirectory)\mpiexec\mpiexec.exe;
+                           $(BinariesBuildTypeArchDirectory)\msmpi\msmpi.dll;
+                           $(BinariesBuildTypeArchDirectory)\msmpi\msmpi.lib"/>
+
+    <BuildFirstInputs Include="$(SrcRoot)\NetDirect\**\*.cpp;
+                              $(SrcRoot)\NetDirect\**\*.c;
+                              $(SrcRoot)\NetDirect\**\*.h;
+                              $(SrcRoot)\NetDirect\**\*.mc;
+                              $(SrcRoot)\include\**\*.h;
+                              $(SrcRoot)\include\**\*.f90;
+                              $(MPI_SRC_ROOT)\msmpi\fortran\*.alias;
+                              $(MPI_SRC_ROOT)\msmpi\fortran\*.cpp;
+                              $(MPI_SRC_ROOT)\msmpi\fortran\*.h;
+                              $(MPI_SRC_ROOT)\msmpi\fortran\*.f90;
+                              $(SrcRoot)\msmpires\msmpires.rc"
+                     Exclude="$(SrcRoot)\NetDirect\**\obj*\**\*;
+                              $(SrcRoot)\include\**\obj*\**\*;
+                              $(MPI_SRC_ROOT)\msmpi\fortran\**\obj*\**\*;
+                              $(SrcRoot)\msmpires\**\obj*\**\*"/>
+    <BuildFirstOutputs Include="$(BinariesBuildTypeArchDirectory)\$(ND_DDK_DESTINATION)\inc\ndstatus.h;
+                                $(BinariesBuildTypeArchDirectory)\NetDirect\NetDirect.lib;
+                                $(BinariesBuildTypeArchDirectory)\msmpifec\msmpifec.lib;
+                                $(MPI_BIN_OUTPUT_DESTINATION)\msmpires.dll "/>
+
+    <LaunchSvcInputs Include="$(SrcRoot)\LaunchSvc\**\*.cpp;
+                              $(SrcRoot)\LaunchSvc\**\*.c;
+                              $(SrcRoot)\LaunchSvc\**\*.h;
+                              $(SrcRoot)\LaunchSvc\**\*.mc;
+                              $(SrcRoot)\LaunchSvc\**\*.rc;
+                              $(BinariesBuildTypeArchDirectory)\mpicommon\mpicommon.lib;
+                              $(BinariesBuildTypeArchDirectory)\mpistub\mpistub.lib;
+                              $(BinariesBuildTypeArchDirectory)\msmpi\msmpi.lib"
+                     Exclude="$(SrcRoot)\LaunchSvc\**\obj*\**\*"/>
+
+    <LaunchSvcOutputs Include="$(BinariesBuildTypeArchDirectory)\msmpiLaunchSvc\msmpiLaunchSvc.exe;
+                               $(MPI_BIN_OUTPUT_DESTINATION)\msmpiLaunchSvc.exe"/>
+
+    <ToolsInputs Include="$(MPI_TOOLS_ROOT)\**\*.cpp;
+                          $(MPI_TOOLS_ROOT)\**\*.c;
+                          $(MPI_TOOLS_ROOT)\**\*.h;
+                          $(MPI_TOOLS_ROOT)\**\*.inl;
+                          $(MPI_TOOLS_ROOT)\**\*.idl;
+                          $(MPI_TOOLS_ROOT)\**\*.acf;
+                          $(MPI_TOOLS_ROOT)\**\*.mc;
+                          $(MPI_TOOLS_ROOT)\**\*.rc;
+                          $(BinariesBuildTypeArchDirectory)\mpicommon\mpicommon.lib;
+                          $(BinariesBuildTypeArchDirectory)\mpistub\mpistub.lib;
+                          $(BinariesBuildTypeArchDirectory)\msmpi\msmpi.lib"
+                 Exclude="$(MPI_TOOLS_ROOT)\**\obj*\**\*"/>
+    <ToolsOutputs  Include="$(BinariesBuildTypeArchDirectory)\clusmon\clusmon.exe;
+                            $(BinariesBuildTypeArchDirectory)\clusmonsrv\clusmonsrv.exe;
+                            $(BinariesBuildTypeArchDirectory)\mpiaffinity\mpiaffinity.exe;
+                            $(BinariesBuildTypeArchDirectory)\mpidbgext\mpidbgext.dll;
+                            $(BinariesBuildTypeArchDirectory)\mpidbgdmon\mpidbgdmon.exe;
+                            $(BinariesBuildTypeArchDirectory)\mpidbgrpc\mpidbgrpc.lib;
+                            $(BinariesBuildTypeArchDirectory)\msmpidbg\msmpidbg.dll;
+                            $(BinariesBuildTypeArchDirectory)\procinfo\procinfo.exe;
+                            $(BinariesBuildTypeArchDirectory)\easytuner\easytuner.exe;
+                            $(BinariesBuildTypeArchDirectory)\collcount\collcount.exe;
+                            $(BinariesBuildTypeArchDirectory)\etlcommdump\etlcommdump.exe;
+                            $(BinariesBuildTypeArchDirectory)\etwutil\etwutil.lib;
+                            $(BinariesBuildTypeArchDirectory)\etl2clog\etl2clog.exe;
+                            $(BinariesBuildTypeArchDirectory)\etl2otf\etl2otf.exe;
+                            $(BinariesBuildTypeArchDirectory)\mpistats\mpistats.exe;
+                            $(BinariesBuildTypeArchDirectory)\mpitracecommon\mpitracecommon.lib;
+                            $(BinariesBuildTypeArchDirectory)\nd2memoryTest\nd2memoryTest.exe;
+                            $(BinariesBuildTypeArchDirectory)\ndcq\ndcq.exe;
+                            $(BinariesBuildTypeArchDirectory)\ndconn\ndconn.exe;
+                            $(BinariesBuildTypeArchDirectory)\ndmval\ndmval.exe;
+                            $(BinariesBuildTypeArchDirectory)\ndping\ndping.exe;
+                            $(BinariesBuildTypeArchDirectory)\ndcat\ndcat.exe;
+                            $(BinariesBuildTypeArchDirectory)\ndmw\ndmw.exe;
+                            $(BinariesBuildTypeArchDirectory)\ndmpic\ndmpic.exe;
+                            $(BinariesBuildTypeArchDirectory)\ndpingpong\ndpingpong.exe;
+                            $(BinariesBuildTypeArchDirectory)\ndregrate\ndregrate.exe;
+                            $(BinariesBuildTypeArchDirectory)\ndstat\ndstat.exe;
+                            $(BinariesBuildTypeArchDirectory)\ndutil\ndutil.lib;
+                            $(BinariesBuildTypeArchDirectory)\PurgeMSMPI_$(Platform)\PurgeMSMPI_$(Platform).exe;"/>
+    <ClusmonInputs Include="$(MPI_TOOLS_ROOT)\clusmon\**\*.cpp;
+                            $(MPI_TOOLS_ROOT)\clusmon\**\*.c;
+                            $(MPI_TOOLS_ROOT)\clusmon\**\*.h;
+                            $(MPI_TOOLS_ROOT)\clusmon\**\*.mc;
+                            $(MPI_TOOLS_ROOT)\clusmon\**\*.rc;
+                            $(BinariesBuildTypeArchDirectory)\mpicommon\mpicommon.lib"
+                   Exclude="$(MPI_TOOLS_ROOT)\clusmon\**\obj*\**\*"/>
+    <ClusmonOutputs Include="$(BinariesBuildTypeArchDirectory)\clusmon\clusmon.exe;
+                             $(BinariesBuildTypeArchDirectory)\clusmonsrv\clusmonsrv.exe"/>
+    <DebugInputs Include="$(MPI_TOOLS_ROOT)\debug\**\*.cpp;
+                            $(MPI_TOOLS_ROOT)\debug\**\*.c;
+                            $(MPI_TOOLS_ROOT)\debug\**\*.h;
+                            $(MPI_TOOLS_ROOT)\debug\**\*.idl;
+                            $(MPI_TOOLS_ROOT)\debug\**\*.acf;
+                            $(MPI_TOOLS_ROOT)\debug\**\*.mc;
+                            $(MPI_TOOLS_ROOT)\debug\**\*.rc;
+                            $(BinariesBuildTypeArchDirectory)\mpicommon\mpicommon.lib;
+                            $(BinariesBuildTypeArchDirectory)\mpistub\mpistub.lib"
+                   Exclude="$(MPI_TOOLS_ROOT)\debug\**\obj*\**\*"/>
+    <DebugOutputs Include="$(BinariesBuildTypeArchDirectory)\msmpidbg\msmpidbg.dll;
+                           $(BinariesBuildTypeArchDirectory)\mpidbgdmon\mpidbgdmon.exe;
+                           $(BinariesBuildTypeArchDirectory)\mpidbgext\mpidbgext.dll"/>
+    <MSIInputs    Include="$(MPI_BIN_OUTPUT_DESTINATION)\mpiexec.exe;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\smpd.exe;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\msmpi.dll;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\msmpilaunchsvc.exe" />
+    <MSIOutputs   Include="$(BinariesBuildTypeArchDirectory)\mpi_$(Platform).msi"/>
+
+  </ItemGroup>
+
+  <Target Name="BuildTraceManifest"
+          Inputs="@(TraceManifestInputs)"
+          Outputs="@(TraceManifestOutputs)">
+    <MsBuild Projects="$(MPI_SRC_ROOT)\common\traceManifest.vcxproj"
+             Properties="@(MSBuildProperties)"/>
+  </Target>
+
+  <Target Name="BuildFirst"
+          Inputs="@(BuildFirstInputs)"
+          Outputs="@(BuildFirstOutputs)"
+          DependsOnTargets="BuildTraceManifest">
+    <ItemGroup>
+      <FirstProjectsToBuild Include="$(SrcRoot)\NetDirect\project.vcxproj;
+                                     $(SrcRoot)\include\binplace.proj;
+                                     $(SrcRoot)\msmpires\project.vcxproj;
+                                     $(MPI_SRC_ROOT)\msmpi\fortran\dirs.proj">
+        <Properties>@(MSBuildProperties)</Properties>
+      </FirstProjectsToBuild>
+      <FirstProjectsToBuild Include="$(SrcRoot)\NetDirect\project.vcxproj;
+                                     $(SrcRoot)\include\binplace.proj;
+                                     $(SrcRoot)\msmpires\project.vcxproj;
+                                     $(MPI_SRC_ROOT)\msmpi\fortran\dirs.proj">
+        <Properties>@(MSBuildOtherProps)</Properties>
+      </FirstProjectsToBuild>
+    </ItemGroup>
+    <MsBuild Projects="@(FirstProjectsToBuild)" BuildInParallel="true"/>
+  </Target>
+
+  <Target Name="BuildMSMPI"
+          DependsOnTargets="BuildFirst"
+          Inputs="@(MSMPIInputs)"
+          Outputs="@(MSMPIOutputs)">
+    <ItemGroup>
+      <MSMPIProjectsToBuild Include="$(MPI_SRC_ROOT)\dirs.proj">
+        <Properties>@(MSBuildProperties)</Properties>
+      </MSMPIProjectsToBuild>
+      <MSMPIProjectsToBuild Include="$(MPI_SRC_ROOT)\dirs.proj">
+        <Properties>@(MSBuildOtherProps)</Properties>
+      </MSMPIProjectsToBuild>
+    </ItemGroup>
+    <MsBuild Projects="@(MSMPIProjectsToBuild)" BuildInParallel="true"/>
+  </Target>
+
+  <Target Name="BuildLaunchSvc"
+          DependsOnTargets="BuildMSMPI"
+          Inputs="@(LaunchSvcInputs)"
+          Outputs="@(LaunchSvcOutputs)">
+    <ItemGroup>
+      <LaunchSvcProjectsToBuild Include="$(SrcRoot)\launchSvc\msmpiLaunchSvc.vcxproj">
+        <Properties>@(MSBuildProperties)</Properties>
+      </LaunchSvcProjectsToBuild>
+      <LaunchSvcProjectsToBuild Include="$(SrcRoot)\launchSvc\msmpiLaunchSvc.vcxproj">
+        <Properties>@(MSBuildOtherProps)</Properties>
+      </LaunchSvcProjectsToBuild>
+    </ItemGroup>
+    <MsBuild Projects="@(LaunchSvcProjectsToBuild)" BuildInParallel="true"/>
+  </Target>
+
+  <Target Name="BuildMpiTools"
+          DependsOnTargets="BuildMSMPI"
+          Inputs="@(ToolsInputs)"
+          Outputs="@(ToolsOutputs)">
+    <ItemGroup>
+      <ToolsProjectsToBuild Include="$(MPI_TOOLS_ROOT)\dirs.proj">
+        <Properties>@(MSBuildProperties)</Properties>
+      </ToolsProjectsToBuild>
+      <ToolsProjectsToBuild Include="$(MPI_TOOLS_ROOT)\dirs.proj">
+        <Properties>@(MSBuildOtherProps)</Properties>
+      </ToolsProjectsToBuild>
+    </ItemGroup>
+    <MsBuild Projects="@(ToolsProjectsToBuild)" BuildInParallel="true"/>
+  </Target>
+
+  <Target Name="BuildClusmon"
+          DependsOnTargets="BuildMSMPI"
+          Inputs="@(ClusmonInputs)"
+          Outputs="@(ClusmonOutputs)">
+    <ItemGroup>
+      <ClusmonProjectsToBuild Include="$(MPI_TOOLS_ROOT)\clusmon\dirs.proj">
+        <Properties>@(MSBuildProperties)</Properties>
+      </ClusmonProjectsToBuild>
+    </ItemGroup>
+    <MsBuild Projects="@(ClusmonProjectsToBuild)" BuildInParallel="true"/>
+  </Target>
+
+  <Target Name="BuildMPIDebug"
+          DependsOnTargets="BuildMSMPI"
+          Inputs="@(DebugInputs)"
+          Outputs="@(DebugOutputs)">
+    <ItemGroup>
+      <DebugProjectsToBuild Include="$(MPI_TOOLS_ROOT)\debug\dirs.proj">
+        <Properties>@(MSBuildProperties)</Properties>
+      </DebugProjectsToBuild>
+    </ItemGroup>
+    <MsBuild Projects="@(DebugProjectsToBuild)" BuildInParallel="true"/>
+  </Target>
+
+  <Target Name="BuildMSI"
+          DependsOnTargets="BuildLaunchSvc;BuildMpiTools"
+          Inputs="@(MSIInputs)"
+          Outputs="@(MSIOutputs)">
+    <MsBuild Projects="$(MPI_REDIST_ROOT)\msmpimsi\build.proj"
+             Properties="@(MSBuildProperties)"/>
+  </Target>
+
+</Project>

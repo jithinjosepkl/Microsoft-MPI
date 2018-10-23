@@ -1,0 +1,24 @@
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(EnvironmentConfig)" />
+  <Import Project="$(SrcRoot)\mpi.props" />
+  
+  <ItemGroup>
+    <ProjectReference Include="channels\mpichannels.vcxproj" />
+    <ProjectReference Include="mpid\mpid.vcxproj" />
+    <ProjectReference Include="io\mpiio.vcxproj" />
+    <ProjectReference Include="util\mpiutil.vcxproj" />
+    <ProjectReference Include="api\mpiapi.vcxproj" />
+    <ProjectReference Include="dll\msmpi.vcxproj" />
+    <ProjectReference Include="dbg\mpi_debugger.vcxproj" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+  <PropertyGroup>
+    <BuildDependsOn>ResolveReferences</BuildDependsOn>
+  </PropertyGroup>
+  <Target Name="VerifyAlteredTargetsUsed" />
+  
+  <Import Project="$(SrcRoot)\mpi.targets"/>
+  <PropertyGroup>
+     <ResolveReferencesDependsOn>$(ResolveReferencesDependsOn);BuildFirst</ResolveReferencesDependsOn>
+  </PropertyGroup>
+</Project>

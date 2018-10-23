@@ -1,0 +1,15 @@
+/*
+ *  (C) 2015 by Microsoft Corporation.
+ *      See COPYRIGHT in top-level directory.
+ */
+
+[explicit_handle, strict_context_handle]
+interface SmpdSvcRpc
+{
+}
+
+[explicit_handle, strict_context_handle]
+interface SmpdMgrRpc
+{
+   [async] SmpdMgrCommandAsync([context_handle_noserialize] pContext);
+}

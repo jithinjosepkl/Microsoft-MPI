@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_MSMPI_IS_RTM_>1</_MSMPI_IS_RTM_>
+  </PropertyGroup>
+
+  <Target Name="SetMSMPIVersion" BeforeTargets="ClCompile" DependsOnTargets="_GetVersionInfo" >
+    <PropertyGroup>
+      <!-- No shift operation, so multiply by powers of 2.
+           Also, hex numbers don't seem to be allowed, so the bitwise AND operations use decimal instead of all Fs.
+      -->
+      <_MSMPI_VER_>$([MSBuild]::BitwiseOr(`$([MSBuild]::Multiply(`$(ProductMajorVersion)`, `256`))`, `$([MSBuild]::BitwiseAnd(`$(ProductMinorVersion)`, `255`))`))</_MSMPI_VER_>
+      <_MSMPI_VER_EX_>$([MSBuild]::BitwiseOr(`$([MSBuild]::Multiply(`$(_MSMPI_VER_)`, `65536`))`, `$([MSBuild]::BitwiseAnd(`$(BuildMinorVersion)`, `65535`))`))</_MSMPI_VER_EX_>
+      <_MSMPI_BUILDNUM_>$(BuildMajorVersion)</_MSMPI_BUILDNUM_>
+      <_MSMPI_FILEREV_>$(BuildMinorVersion)</_MSMPI_FILEREV_>
+    </PropertyGroup>
+    <ItemGroup>
+      <ClCompile>
+        <PreprocessorDefinitions>
+          %(PreprocessorDefinitions);
+          MSMPI_VER=$(_MSMPI_VER_);
+          MSMPI_VER_EX=$(_MSMPI_VER_EX_);
+          _BLDVERMAJOR=$(ProductMajorVersion);
+          _BLDVERMINOR=$(ProductMinorVersion);
+          _BLDNUMMAJOR=$(BuildMajorVersion);
+          _BLDNUMMINOR=$(BuildMinorVersion);
+        </PreprocessorDefinitions>
+      </ClCompile>
+    </ItemGroup>
+    <Message Text="MSMPI Version $(ProductMajorVersion).$(ProductMinorVersion).$(BuildMajorVersion).$(BuildMinorVersion) - $(_MSMPI_VER_) - $(_MSMPI_VER_EX_)" />
+  </Target>
+
+  <PropertyGroup>
+    <TrackFileAccess>false</TrackFileAccess>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <Platform Condition="'$(BuildArchitecture)'=='amd64'">x64</Platform>
+    <Platform Condition="'$(BuildArchitecture)'=='i386'">x86</Platform>
+    <OtherPlatform Condition="'$(BuildArchitecture)'=='amd64'">x86</OtherPlatform>
+    <OtherPlatform Condition="'$(BuildArchitecture)'=='i386'">x64</OtherPlatform>
+    <OtherArchitecture Condition="'$(BuildArchitecture)'=='amd64'">i386</OtherArchitecture>
+    <OtherArchitecture Condition="'$(BuildArchitecture)'=='i386'">amd64</OtherArchitecture>
+
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <CharacterSet>NotSet</CharacterSet>
+
+    <_COMPONENTNAME_>mpi</_COMPONENTNAME_>
+
+    <!-- Are the OBJ paths needed with the way the obj directories are alongside the sources? -->
+    <MPI_ROOT>$(BaseDir)</MPI_ROOT>
+
+    <MPI_INC_ROOT>$(SrcRoot)\include</MPI_INC_ROOT>
+    <MPI_INC_ARCH_ROOT Condition="'$(BuildArchitecture)'=='amd64'">$(MPI_INC_ROOT)\x64</MPI_INC_ARCH_ROOT>
+    <MPI_INC_ARCH_ROOT Condition="'$(BuildArchitecture)'=='i386'">$(MPI_INC_ROOT)\x86</MPI_INC_ARCH_ROOT>
+    <MPI_INC_PATH>$(MPI_INC_ROOT);$(MPI_INC_ARCH_ROOT)</MPI_INC_PATH>
+
+    <ND_INC_PATH>$(MPI_INC_ROOT);$(SrcRoot)\NetDirect\$(O)</ND_INC_PATH>
+
+    <MPI_SRC_ROOT>$(SrcRoot)\mpi</MPI_SRC_ROOT>
+
+    <MPI_REDIST_ROOT>$(SrcRoot)\redist</MPI_REDIST_ROOT>
+
+    <MPI_TOOLS_ROOT>$(SrcRoot)\tools</MPI_TOOLS_ROOT>
+
+    <MPI_TEST_ROOT>$(SrcRoot)\test</MPI_TEST_ROOT>
+
+    <MPI_DESTINATION>bin</MPI_DESTINATION>
+    <MPI_BIN_DESTINATION>$(MPI_DESTINATION)</MPI_BIN_DESTINATION>
+    <MPI_BIN_OUTPUT_DESTINATION>$(BinariesBuildTypeArchDirectory)\$(MPI_BIN_DESTINATION)</MPI_BIN_OUTPUT_DESTINATION>
+    <MPI_FULL_TEST_DESTINATION>$(MPI_BIN_OUTPUT_DESTINATION)</MPI_FULL_TEST_DESTINATION>
+    <MPI_SDK_DESTINATION>$(MPI_DESTINATION)\sdk</MPI_SDK_DESTINATION>
+    <ND_DDK_DESTINATION>$(MPI_DESTINATION)\ddk</ND_DDK_DESTINATION>
+
+    <REDIST_DESTINATION>redist</REDIST_DESTINATION>
+
+    <!-- Should take care of the architecture differences in CoreXT init -->
+    <OACR_INC_PATH>$(OACR_INC)</OACR_INC_PATH>
+
+    <EXTERNAL_ROOT>$(MPI_ROOT)\External</EXTERNAL_ROOT>
+
+    <DEFAULT_STACKCOMMIT>0x2000</DEFAULT_STACKCOMMIT>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(BuildArchitecture)'=='i386'">
+    <OacrDisabled>true</OacrDisabled>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(BuildArchitecture)'=='amd64'">
+    <OacrDisabled>false</OacrDisabled>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <CRT_Libs>$(PUBLIC_SDK_LIB_UCRT)\libucrtd.lib;libcmtd.lib;libvcruntimed.lib</CRT_Libs>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <CRT_Libs>$(PUBLIC_SDK_LIB_UCRT)\libucrt.lib;libcmt.lib;libvcruntime.lib</CRT_Libs>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PUBLIC_SDK_INC>$(PUBLIC_SDK)\Include\10.0.10586.0</PUBLIC_SDK_INC>
+    <PUBLIC_SDK_LIB Condition="'$(BuildArchitecture)'=='i386'">$(PUBLIC_SDK)\Lib\10.0.10586.0\um\x86</PUBLIC_SDK_LIB>
+    <PUBLIC_SDK_LIB Condition="'$(BuildArchitecture)'=='amd64'">$(PUBLIC_SDK)\Lib\10.0.10586.0\um\x64</PUBLIC_SDK_LIB>
+    <PUBLIC_SDK_LIB_UCRT Condition="'$(BuildArchitecture)'=='i386'">$(PUBLIC_SDK)\Lib\10.0.10586.0\ucrt\x86</PUBLIC_SDK_LIB_UCRT>
+    <PUBLIC_SDK_LIB_UCRT Condition="'$(BuildArchitecture)'=='amd64'">$(PUBLIC_SDK)\Lib\10.0.10586.0\ucrt\x64</PUBLIC_SDK_LIB_UCRT>
+    <INTEL_FORTRAN_ROOT>$(INTEL_FORTRAN_PKG)\content</INTEL_FORTRAN_ROOT>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup Condition="'$(BuildArchitecture)'=='amd64'" >
+    <ClCompile>
+      <PreprocessorDefinitions>_WIN64=1;_AMD64_=1;AMD64=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>%(AdditionalOptions) /favor:AMD64</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(BuildArchitecture)'=='i386'" >
+    <ClCompile>
+      <PreprocessorDefinitions>_X86_=1;i386=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>DBG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <PreprocessorDefinitions>NDEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>
+        %(PreprocessorDefinitions);
+        _WIN32_WINNT=_WIN32_WINNT_WIN10;
+      </PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories);
+        $(PUBLIC_SDK_INC)\shared;
+        $(PUBLIC_SDK_INC)\um\minwin;
+        $(PUBLIC_SDK_INC)\um\mincore;
+        $(PUBLIC_SDK_INC)\crt;
+        $(PUBLIC_INTERNAL_SDK)\inc;
+        $(PUBLIC_INTERNAL_OAK)\inc;
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <MinimalRebuild>false</MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <UseFullPaths>true</UseFullPaths>
+      <OmitDefaultLibName>true</OmitDefaultLibName>
+      <StringPooling>true</StringPooling>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <ExceptionHandling>false</ExceptionHandling>
+      <StructMemberAlignment>8Bytes</StructMemberAlignment>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <DisableSpecificWarnings>4986;4987;4471;4369;4309;4603;4627</DisableSpecificWarnings>
+      <FloatingPointModel Condition="'$(BuildArchitecture)'=='i386'">Strict</FloatingPointModel>
+      <CallingConvention Condition="'$(BuildArchitecture)'=='i386'">stdcall</CallingConvention>
+      <ForcedIncludeFiles>
+        $(PUBLIC_SDK_INC)\shared\warning.h;
+        $(MPI_INC_ROOT)\mpiwarning.h;
+        $(PUBLIC_INTERNAL_BASE)\inc\warning_x.h
+      </ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories);
+        $(ND_INC_PATH);
+        $(MPI_INC_PATH);
+        $(MPI_SRC_ROOT)\common;
+        $(OACR_INC_PATH)
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>
+        %(PreprocessorDefinitions);
+        _WINSOCK_DEPRECATED_NO_WARNINGS;
+        VER_USE_OTHER_MAJOR_MINOR_VER;
+        MSMPI_IS_RTM=$(_MSMPI_IS_RTM_);
+        HAVE_DEBUGGER_SUPPORT=1;
+        HAVE_FORTRAN_BINDING=1;
+        USE_HUMAN_READABLE_TOKENS=1;
+        _USE_DECLSPECS_FOR_SAL=1;
+        WIN32_LEAN_AND_MEAN=1;
+        CONDITION_HANDLING=1;
+        _CRT_SECURE_NO_WARNINGS=1;
+      </PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(NO_MPICH_DLL)'==''">
+        %(PreprocessorDefinitions);
+        _MPICH_DLL_=1;
+      </PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration Condition="'$(BuildType)'!='Debug'">UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+  </ItemDefinitionGroup>
+
+</Project>

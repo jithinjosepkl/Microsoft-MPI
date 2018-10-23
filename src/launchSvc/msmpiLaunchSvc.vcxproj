@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(EnvironmentConfig)" />
+  <Import Project="$(SrcRoot)\mpi.props" />
+
+  <PropertyGroup Label="Globals">
+    <TargetName>msmpiLaunchSvc</TargetName>
+    <ProjectGuid>{03cfde58-e72e-41d7-85ed-43150db0ca44}</ProjectGuid>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyDescription>Microsoft MPI Launch Service</AssemblyDescription>
+  </PropertyGroup>
+
+  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.Default.props" />
+
+  <PropertyGroup Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+
+  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(PUBLIC_WDK)\build\WindowsDriver.Default.props" />
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>
+        %(AdditionalIncludeDirectories);
+        $(SrcRoot)\mpi\msmpi\include;
+        $(SrcRoot)\mpi\common;
+        .\$(O);
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+      <AdditionalDependencies>
+        %(AdditionalDependencies);
+        $(PUBLIC_SDK_LIB)\kernel32.lib;
+        $(PUBLIC_SDK_LIB)\crypt32.lib;
+        $(PUBLIC_SDK_LIB)\advapi32.lib;
+        $(PUBLIC_SDK_LIB)\userenv.lib;
+        $(CRT_Libs);
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <ItemGroup>
+    <ProjectReference Condition="'$(BuildFromTopDir)'!='1'" Include="$(MPI_SRC_ROOT)\stub\project.vcxproj" />
+    <ProjectReference Condition="'$(BuildFromTopDir)'!='1'" Include="$(MPI_SRC_ROOT)\common\project.vcxproj" />
+    <ProjectReference Condition="'$(BuildFromTopDir)'!='1'" Include="$(MPI_SRC_ROOT)\msmpi\dll\project.vcxproj" />
+    <Link Condition="'$(BuildFromTopDir)'=='1'" Include="$(BinariesBuildTypeArchDirectory)\mpicommon\mpicommon.lib"/>
+    <Link Condition="'$(BuildFromTopDir)'=='1'" Include="$(BinariesBuildTypeArchDirectory)\mpistub\mpistub.lib"/>
+    <Link Condition="'$(BuildFromTopDir)'=='1'" Include="$(BinariesBuildTypeArchDirectory)\msmpi\msmpi.lib"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <MessageCompile Include="launchsvcmsg.mc">
+      <GeneratedHeaderPath>true</GeneratedHeaderPath>
+      <HeaderFilePath>$(SrcRoot)\launchsvc\$(O)</HeaderFilePath>
+      <GeneratedRCAndMessagesPath>true</GeneratedRCAndMessagesPath>
+      <RCFilePath>$(SrcRoot)\launchsvc\$(O)</RCFilePath>
+    </MessageCompile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ClCompile Include=".\msmpilaunchsvc.cpp" />
+    <ClCompile Include=".\launchsvcmain.cpp" />
+    <ResourceCompile Include="$(O)\launchsvcmsg.rc" />
+
+    <RoboCopy Include="$(OutDir)\$(TargetFileName)">
+      <DestinationFolder>$(MPI_BIN_OUTPUT_DESTINATION)</DestinationFolder>
+    </RoboCopy>
+  </ItemGroup>
+
+  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(PkgWindowsSdk_Corext)\build\WindowsDriver.Common.targets" />
+</Project>

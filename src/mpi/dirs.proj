@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(EnvironmentConfig)" />
+  <ItemGroup>
+    <ProjectReference Include="common\mpicommon.vcxproj" />
+    <ProjectReference Include="stub\mpistub.vcxproj" />
+    <ProjectReference Include="pmilib\dirs.proj" />
+    <ProjectReference Include="msmpi\dirs.proj" />
+    <ProjectReference Include="mpiexec\mpiexec.vcxproj" />
+    <ProjectReference Include="smpd\smpd.vcxproj" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+  <PropertyGroup>
+    <BuildDependsOn>ResolveReferences</BuildDependsOn>
+  </PropertyGroup>
+  <Target Name="VerifyAlteredTargetsUsed" />
+</Project>

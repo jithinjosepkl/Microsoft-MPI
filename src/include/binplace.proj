@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="RoboCopyFiles" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(EnvironmentConfig)" />
+  <Import Project="$(SrcRoot)\mpi.props" />
+
+  <ItemGroup>
+    <NdIncFiles Include="ndspi.h"/>
+    <NdIncFiles Include="nddef.h"/>
+    <NdIncFiles Include="ndioctl.h"/>
+    <NdSrcFiles Include="ndsupport.h"/>
+    <NdSrcFiles Include="ndcommon.h"/>
+  </ItemGroup>  
+   
+  <Import Project="$(ExtendedTargetsPath)\NoTarget.targets" />
+
+  <PropertyGroup>
+    <MpiIncDestFolder>$(BinariesBuildTypeArchDirectory)\$(MPI_SDK_DESTINATION)\inc</MpiIncDestFolder>
+    <NdIncDestFolder>$(BinariesBuildTypeArchDirectory)\$(ND_DDK_DESTINATION)\inc</NdIncDestFolder>
+    <NdSrcDestFolder>$(BinariesBuildTypeArchDirectory)\$(ND_DDK_DESTINATION)\src</NdSrcDestFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Robocopy Include="$(MPI_INC_ROOT)">
+      <DestinationFolder>$(MpiIncDestFolder)</DestinationFolder>
+      <FileMatch>*.h *.f90</FileMatch>
+      <FileExclude>nd*.h</FileExclude>
+    </Robocopy>
+    <Robocopy Include="@(NdIncFiles)">
+      <DestinationFolder>$(NdIncDestFolder)</DestinationFolder>
+    </Robocopy>
+    <Robocopy Include="@(NdSrcFiles)">
+      <DestinationFolder>$(NdSrcDestFolder)</DestinationFolder>
+    </Robocopy>
+  </ItemGroup>
+
+</Project>

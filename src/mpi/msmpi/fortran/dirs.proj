@@ -1,0 +1,15 @@
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(EnvironmentConfig)" />
+  <ItemGroup>
+    <ProjectReference Include="lib\mpifort.vcxproj" />
+    <ProjectReference Include="msmpifmc\msmpifmc.vcxproj" />
+    <ProjectReference Include="msmpifms\msmpifms.vcxproj" />
+    <ProjectReference Include="msmpifec\msmpifec.vcxproj" />
+    <ProjectReference Include="msmpifes\msmpifes.vcxproj" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+  <PropertyGroup>
+    <BuildDependsOn>ResolveReferences</BuildDependsOn>
+  </PropertyGroup>
+  <Target Name="VerifyAlteredTargetsUsed" />
+</Project>

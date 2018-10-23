@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(EnvironmentConfig)" />
+  <Import Project="$(SrcRoot)\mpi.props" />
+
+  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.Default.props" />
+
+  <PropertyGroup Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <ConfigurationType>None</ConfigurationType>
+    <IntDirSharingDetected>None</IntDirSharingDetected>
+  </PropertyGroup>
+
+  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(PUBLIC_WDK)\build\WindowsDriver.Default.props" />
+
+  <ItemGroup>
+    <MessageCompile Include="$(MPI_SRC_ROOT)\common\mpitrace.man">
+      <GeneratedHeaderPath>true</GeneratedHeaderPath>
+      <HeaderFilePath>$(MPI_SRC_ROOT)\common\$(O)</HeaderFilePath>
+      <GeneratedRCAndMessagesPath>true</GeneratedRCAndMessagesPath>
+      <RCFilePath>$(MPI_SRC_ROOT)\common\$(O)</RCFilePath>
+      <GeneratedFilesBaseName>MpiTraceEvents</GeneratedFilesBaseName>
+      <GenerateUserModeLoggingMacros>true</GenerateUserModeLoggingMacros>
+      <PrefixMacroName>Trace</PrefixMacroName>
+      <RemoveCharsFromSymbolName>EVENT_</RemoveCharsFromSymbolName>
+    </MessageCompile>
+  </ItemGroup>
+
+  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(PkgWindowsSdk_Corext)\build\WindowsDriver.Common.targets" />
+
+</Project>

@@ -1,0 +1,12 @@
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(EnvironmentConfig)" />
+  <ItemGroup>
+    <ProjectReference Include="cli\pmicli.vcxproj" />
+    <ProjectReference Include="lib\pmilib.vcxproj" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
+  <PropertyGroup>
+    <BuildDependsOn>ResolveReferences</BuildDependsOn>
+  </PropertyGroup>
+  <Target Name="VerifyAlteredTargetsUsed" />
+</Project>
