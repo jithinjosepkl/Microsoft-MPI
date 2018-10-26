@@ -13,7 +13,5 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)stub\mpistub.vcxproj" />
   </ItemGroup>
 
-  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
   <Import Project="$(TraversalTargets)" Condition=" '$(CBTModulesRestored)' == 'true' " />
-
 </Project>

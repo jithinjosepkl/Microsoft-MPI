@@ -41,7 +41,9 @@
     <ClCompile Include=".\reducescattertuner.cpp" />
     <ClCompile Include=".\reducetuner.cpp" />
   </ItemGroup>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(WDKContentRoot)\build\WindowsDriver.Common.targets" />
 
   <ItemGroup>
     <ProjectReference Include="$(MPI_SRC_ROOT)\common\traceManifest.vcxproj" />
