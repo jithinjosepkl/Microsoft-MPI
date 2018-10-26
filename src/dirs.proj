@@ -3,11 +3,8 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
 
   <ItemGroup>
-    <!--
     <ProjectFile Include="$(MSBuildThisFileDirectory)launchSvc\msmpiLaunchSvc.vcxproj"/>
-    -->
     <ProjectFile Include="$(MSBuildThisFileDirectory)mpi\dirs.proj"/>
-
   </ItemGroup>
   <Import Project="$(TraversalTargets)" Condition=" '$(CBTModulesRestored)' == 'true' " />
 </Project>
