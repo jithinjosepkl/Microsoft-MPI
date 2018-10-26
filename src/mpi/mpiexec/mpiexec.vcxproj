@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(EnvironmentConfig)" />
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(SrcRoot)\mpi.props" />
 
   <PropertyGroup>
@@ -12,14 +12,12 @@
     <ProjectGuid>{e948b96d-1f93-44e0-8033-777d8f96a897}</ProjectGuid>
   </PropertyGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.Default.props" />
-
   <PropertyGroup Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>Application</ConfigurationType>
   </PropertyGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
 
   <ItemDefinitionGroup>
     <ClCompile>
@@ -59,7 +57,6 @@
   </ItemDefinitionGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(SrcRoot)\NetDirect\project.vcxproj" />
     <ProjectReference Include="$(MPI_SRC_ROOT)\common\mpicommon.vcxproj" />
     <ProjectReference Include="$(MPI_SRC_ROOT)\pmilib\lib\pmilib.vcxproj" />
     <ProjectReference Include="$(MPI_SRC_ROOT)\msmpi\dbg\mpi_debugger.vcxproj" />
@@ -80,8 +77,8 @@
     <ClCompile Include=".\smpd_host_util.cpp" />
 
     <RoboCopy Include="$(OutDir)\$(TargetFileName)">
-      <DestinationFolder>$(MPI_FULL_TEST_DESTINATION)</DestinationFolder>
+      <DestinationFolder>$(MPI_BIN_OUTPUT_DESTINATION)</DestinationFolder>
     </RoboCopy>
   </ItemGroup>
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

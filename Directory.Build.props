@@ -92,6 +92,7 @@
     <MPI_DESTINATION>bin</MPI_DESTINATION>
     <MPI_BIN_DESTINATION>$(MPI_DESTINATION)</MPI_BIN_DESTINATION>
     <MPI_BIN_OUTPUT_DESTINATION>$(BinariesBuildTypeArchDirectory)\$(MPI_BIN_DESTINATION)</MPI_BIN_OUTPUT_DESTINATION>
+    <MPI_SDK_DESTINATION>$(MPI_DESTINATION)\sdk</MPI_SDK_DESTINATION>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -113,8 +114,8 @@
     <VCToolsVersion>14.15.26726</VCToolsVersion>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
     <OutDir>$(OutputPath)</OutDir>
+    <O>$(Platform)\$(Configuration)</O>
     <ResolveNugetpackages>false</ResolveNugetpackages>
   </PropertyGroup>
 
@@ -128,20 +129,6 @@
     <LinkIncremental>false</LinkIncremental>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-
-  <ItemDefinitionGroup>
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>26439</DisableSpecificWarnings>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Windows</SubSystem>
-    </Link>
-  </ItemDefinitionGroup>
 
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
@@ -191,7 +178,6 @@
       <Output TaskParameter="DestinationFiles" ItemName="FileWrites"/>
     </Copy>
   </Target>
-
 
   <!-- NuProj.props sets a default TargetFrameworkVersion if none is set. Import this before any DotNetFx module props/targets that rely on TargetFrameworkVersion. -->
   <!--  <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props') AND '$(MSBuildProjectExtension)' == '.nuproj'" /> -->

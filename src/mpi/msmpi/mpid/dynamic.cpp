@@ -146,7 +146,7 @@ MPID_Comm_join(_In_ SOCKET fd, _Out_ MPI_Comm *intercomm)
                                          MPI_MAX_PORT_NAME );
     if( cmpLocalRemote == CSTR_EQUAL )
     {
-        mpi_errno = MPIU_ERR_CREATE(MPI_ERR_INTERN, "**join_portname %s %s", local_port, remote_port);
+        mpi_errno = MPIU_ERR_CREATE(MPI_ERR_INTERN, "**join_portname %s %s", (char *)local_port, remote_port);
         goto fn_fail;
     }
 

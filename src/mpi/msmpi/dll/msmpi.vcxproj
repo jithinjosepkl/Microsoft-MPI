@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(EnvironmentConfig)" />
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="..\msmpi.props" />
 
   <PropertyGroup Label="Globals">
@@ -8,13 +8,11 @@
     <ProjectGuid>{d31839a6-d2db-4ade-8348-4dd3f9d4d12f}</ProjectGuid>
   </PropertyGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.Default.props" />
-
   <PropertyGroup Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
 
   <ItemDefinitionGroup>
     <ClCompile>
@@ -49,7 +47,6 @@
         $(OutDir)\..\mpichannels\mpichannels.lib;
         $(OutDir)\..\mpiio\mpiio.lib;
         $(OutDir)\..\mpicommon\mpicommon.lib;
-        $(OutDir)\..\netdirect\netdirect.lib;
         $(OutDir)\..\mpiutil\mpiutil.lib;
         $(OutDir)\..\pmicli\pmicli.lib;
         $(OutDir)\..\mpiapi\mpiapi.lib;
@@ -79,9 +76,6 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <ProjectReference Include="$(MPI_SRC_ROOT)\common\mpicommon.vcxproj">
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-    </ProjectReference>
-    <ProjectReference Include="$(SrcRoot)\NetDirect\project.vcxproj">
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <ProjectReference Include="$(MPI_SRC_ROOT)\msmpi\util\mpiutil.vcxproj">
@@ -117,5 +111,9 @@
     </RoboCopy>
   </ItemGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.targets" />
+  <ItemGroup>
+    <PackageReference Include="NetworkDirect" Version="2.0.0" />
+  </ItemGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

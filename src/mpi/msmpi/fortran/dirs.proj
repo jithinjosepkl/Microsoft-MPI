@@ -1,15 +1,16 @@
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(EnvironmentConfig)" />
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="$(SrcRoot)\mpi.props" />
+
   <ItemGroup>
-    <ProjectReference Include="lib\mpifort.vcxproj" />
-    <ProjectReference Include="msmpifmc\msmpifmc.vcxproj" />
-    <ProjectReference Include="msmpifms\msmpifms.vcxproj" />
-    <ProjectReference Include="msmpifec\msmpifec.vcxproj" />
-    <ProjectReference Include="msmpifes\msmpifes.vcxproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)lib\mpifort.vcxproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)msmpifec\msmpifec.vcxproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)msmpifes\msmpifes.vcxproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)msmpifmc\msmpifmc.vcxproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)msmpifms\msmpifms.vcxproj" />
   </ItemGroup>
+
   <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
-  <PropertyGroup>
-    <BuildDependsOn>ResolveReferences</BuildDependsOn>
-  </PropertyGroup>
-  <Target Name="VerifyAlteredTargetsUsed" />
+  <Import Project="$(TraversalTargets)" Condition=" '$(CBTModulesRestored)' == 'true' " />
 </Project>

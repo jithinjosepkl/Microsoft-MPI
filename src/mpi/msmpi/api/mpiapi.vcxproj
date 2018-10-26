@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(EnvironmentConfig)" />
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="..\msmpi.props" />
 
   <PropertyGroup Label="Globals">
@@ -8,14 +8,12 @@
     <ProjectGuid>{49a00e51-7f11-4a7f-a9ab-b361269dda3a}</ProjectGuid>
   </PropertyGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.Default.props" />
-
   <PropertyGroup Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
 
   <ItemDefinitionGroup>
     <ClCompile>
@@ -64,10 +62,10 @@
     <ClCompile Include=".\mpi_win.cpp" />
   </ItemGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 
-  <PropertyGroup>
-     <ResolveReferencesDependsOn>BuildTraceManifest;$(ResolveReferencesDependsOn)</ResolveReferencesDependsOn>
-  </PropertyGroup>
-  <Import Project="$(SrcRoot)\mpi.targets"/>
+  <ItemGroup>
+    <ProjectReference Include="$(MPI_SRC_ROOT)\common\traceManifest.vcxproj" />
+  </ItemGroup>
+
 </Project>

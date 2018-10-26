@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\msmpi.props" />
+
   <PropertyGroup>
     <NO_MPICH_DLL>true</NO_MPICH_DLL>
   </PropertyGroup>
-  <Import Project="..\msmpi.props" />
+
   <ItemGroup Condition="'$(NO_AMD64_LIB)'==''">
     <RoboCopy Include="$(OutDir)\$(TargetName).lib">
       <DestinationFolder>$(BinariesBuildTypeArchDirectory)\$(MPI_SDK_DESTINATION)\lib</DestinationFolder>
     </RoboCopy>
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(BuildArchitecture)'=='amd64'">
-    <CL_Exe>$(PkgVisualCpp_Corext)\bin\x86_x64\cl.exe</CL_Exe>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(BuildArchitecture)'=='i386'">
-    <CL_Exe>$(PkgVisualCpp_Corext)\bin\x86\cl.exe</CL_Exe>
+  <PropertyGroup>
+    <CL_Exe>cl.exe</CL_Exe>
   </PropertyGroup>
 
   <Target Name="GenerateEmptyCFile"

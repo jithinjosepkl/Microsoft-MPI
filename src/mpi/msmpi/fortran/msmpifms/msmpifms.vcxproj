@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(EnvironmentConfig)" />
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="..\fortran.props" />
 
   <PropertyGroup Condition="'$(BuildArchitecture)'=='amd64'">
     <NO_AMD64_LIB>true</NO_AMD64_LIB>
@@ -8,21 +9,18 @@
   <PropertyGroup>
     <CallingConvention>stdcall</CallingConvention>
   </PropertyGroup>
-  <Import Project="..\fortran.props" />
 
   <PropertyGroup Label="Globals">
     <TargetName>msmpifms</TargetName>
     <ProjectGuid>{6b873754-6dd8-405c-afbe-e03a521d3ace}</ProjectGuid>
   </PropertyGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.Default.props" />
-
   <PropertyGroup Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
 
   <ItemDefinitionGroup>
     <ClCompile>
@@ -44,7 +42,7 @@
     <Lib Include="$(O)\$(BuildArchitecture).$(CallingConvention).obj"/>
   </ItemGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 
   <!-- Has to come after the Microsoft.cpp.targets import -->
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">

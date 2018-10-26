@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="SetMSMPIVersion" BeforeTargets="ClCompile" >
+    <PropertyGroup>
+      <!-- No shift operation, so multiply by powers of 2.
+           Also, hex numbers don't seem to be allowed, so the bitwise AND operations use decimal instead of all Fs.
+      -->
+
+      <ProductMajorVersion>10</ProductMajorVersion>
+      <ProductMinorVersion>0</ProductMinorVersion>
+      <BuildMajorVersion>12498</BuildMajorVersion>
+      <BuildMinorVersion>5</BuildMinorVersion>
+
+      <_MSMPI_VER_>$([MSBuild]::BitwiseOr(`$([MSBuild]::Multiply(`$(ProductMajorVersion)`, `256`))`, `$([MSBuild]::BitwiseAnd(`$(ProductMinorVersion)`, `255`))`))</_MSMPI_VER_>
+      <_MSMPI_VER_EX_>$([MSBuild]::BitwiseOr(`$([MSBuild]::Multiply(`$(_MSMPI_VER_)`, `65536`))`, `$([MSBuild]::BitwiseAnd(`$(BuildMinorVersion)`, `65535`))`))</_MSMPI_VER_EX_>
+      <_MSMPI_BUILDNUM_>$(BuildMajorVersion)</_MSMPI_BUILDNUM_>
+      <_MSMPI_FILEREV_>$(BuildMinorVersion)</_MSMPI_FILEREV_>
+
+    </PropertyGroup>
+    <GetFrameworkSdkPath>
+      <Output TaskParameter="Path" PropertyName="WindowsSdkPath"/>
+    </GetFrameworkSdkPath>
+    <ItemGroup>
+      <ClCompile>
+        <PreprocessorDefinitions>
+          %(PreprocessorDefinitions);
+          MSMPI_VER=$(_MSMPI_VER_);
+          MSMPI_VER_EX=$(_MSMPI_VER_EX_);
+          _BLDVERMAJOR=$(ProductMajorVersion);
+          _BLDVERMINOR=$(ProductMinorVersion);
+          _BLDNUMMAJOR=$(BuildMajorVersion);
+          _BLDNUMMINOR=$(BuildMinorVersion);
+        </PreprocessorDefinitions>
+      </ClCompile>
+    </ItemGroup>
+    <Message Text="MSMPI Version $(ProductMajorVersion).$(ProductMinorVersion).$(BuildMajorVersion).$(BuildMinorVersion) - $(_MSMPI_VER_) - $(_MSMPI_VER_EX_)" />
+  </Target>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <CRT_Libs>libucrtd.lib;libcmtd.lib;libvcruntimed.lib</CRT_Libs>
@@ -82,7 +118,10 @@
       <StructMemberAlignment>8Bytes</StructMemberAlignment>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
-      <DisableSpecificWarnings>4986;4987;4471;4369;4309;4603;4627</DisableSpecificWarnings>
+      <DisableSpecificWarnings>
+        4986;4987;4471;4369;4309;4603;4627;
+        6287;26495;6001;26451;28020;6385;6101;28252
+      </DisableSpecificWarnings>
       <FloatingPointModel Condition="'$(BuildArchitecture)'=='i386'">Strict</FloatingPointModel>
       <CallingConvention Condition="'$(BuildArchitecture)'=='i386'">stdcall</CallingConvention>
       <ForcedIncludeFiles>

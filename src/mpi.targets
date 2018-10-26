@@ -45,6 +45,72 @@
           Command="$(INTEL_FORTRAN_ROOT)\$(BuildArchitecture)\ifort.exe /I$(MPI_INC_ROOT) /I$(MPI_INC_ARCH_ROOT) /Z7 /fpp /Zl $(IFort_Flags) /names:lowercase /Qdiag-disable:vec -c %(ForCompile.Identity) -Fo$(O)"
           />
 
+  <ItemGroup>
+    <RedistInputs Include="$(MPI_BIN_OUTPUT_DESTINATION)\msmpidbg\mpidbgext.dll;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\msmpidbg\mpidbgdmon.exe;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\msmpidbg\msmpidbg.dll;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\msmpi.dll;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\mpiexec.exe;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\smpd.exe;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\msmpiLaunchSvc.exe;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\msmpires.dll;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\mpitrace.man;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\sdk\lib\msmpi.lib;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\sdk\lib\msmpifec.lib;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\sdk\lib\msmpifmc.lib;
+                           $(MPI_BIN_OUTPUT_DESTINATION)\sdk\inc\mpi.h"/>
+    <RedistOutputs Include="$(BinariesBuildTypeArchDirectory)\mpi_x64\mpi_x64.msi;
+                            $(BinariesDirectory)\$(BuildType)-i386\msmpisetup\msmpisetup.exe"/>
+  </ItemGroup>
+
+  <Target Name="SignBinaries"
+          Condition="'$(IsOfficialBuild)'!=''"
+          DependsOnTargets="BuildLaunchSvc;BuildMpiTools"
+          BeforeTargets="BuildTest;BuildRedist">
+    <ItemGroup>
+      <SignProjectsToBuild Include="PrssSigning\SignBinaries.proj">
+        <Properties>@(MSBuildProperties)</Properties>
+      </SignProjectsToBuild>
+      <SignProjectsToBuild Include="PrssSigning\SignBinaries.proj">
+        <Properties>@(MSBuildOtherProps)</Properties>
+      </SignProjectsToBuild>
+    </ItemGroup>
+    <MsBuild Projects="@(SignProjectsToBuild)" BuildInParallel="true"/>
+  </Target>
+
+  <Target Name="BuildTest"
+          Condition="'$(IsOfficialBuild)'!='' Or '$(BuildTest)'!=''"
+          DependsOnTargets="BuildMSMPI"
+          BeforeTargets="BuildRedist">
+    <ItemGroup>
+      <TestProjectsToBuild Include="$(SrcRoot)\test\dirs.proj">
+        <Properties>@(MSBuildProperties)</Properties>
+      </TestProjectsToBuild>
+      <TestProjectsToBuild Include="$(SrcRoot)\test\dirs.proj">
+        <Properties>@(MSBuildOtherProps)</Properties>
+      </TestProjectsToBuild>
+    </ItemGroup>
+    <MsBuild Projects="@(TestProjectsToBuild)" BuildInParallel="true"/>
+  </Target>
+
+  <Target Name="BuildRedist"
+          Condition="'$(IsOfficialBuild)'!='' Or '$(BuildRedist)'!=''"
+          DependsOnTargets="BuildLaunchSvc;BuildMpiTools"
+          BeforeTargets="Build"
+          Inputs="@(RedistInputs)"
+          Outputs="@(RedistOutputs)">
+    <MsBuild Projects="redist\dirs.proj"
+             Properties="@(MSBuildProperties)"/>
+  </Target>
+
+  <Target Name="SignRedist"
+          Condition="'$(IsOfficialBuild)'!=''"
+          DependsOnTargets="BuildRedist"
+          BeforeTargets="Build">
+    <MsBuild Projects="PrssSigning\SignInstallers.proj;PrssSigning\SignSetup.proj"
+             Properties="@(MSBuildProperties)"/>
+  </Target>
+
     <ItemGroup>
       <Lib Condition="'$(ConfigurationType)'=='StaticLibrary'" Include="@(ForCompile->'$(O)\%(Filename).obj')" />
     </ItemGroup>

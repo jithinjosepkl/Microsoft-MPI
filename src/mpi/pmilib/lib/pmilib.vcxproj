@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(EnvironmentConfig)" />
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(SrcRoot)\mpi.props" />
 
   <PropertyGroup Label="Globals">
@@ -8,14 +8,13 @@
     <ProjectGuid>{42803356-4ca2-499f-8f17-6d94a1935f9d}</ProjectGuid>
   </PropertyGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="$(PUBLIC_WDK)\build\WindowsDriver.Default.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(WDKContentRoot)\build\WindowsDriver.Default.props" />
 
   <ItemDefinitionGroup>
     <ClCompile>
@@ -84,6 +83,6 @@
   <ItemGroup>
 
   </ItemGroup>
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="$(PkgWindowsSdk_Corext)\build\WindowsDriver.Common.targets" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(WDKContentRoot)\build\WindowsDriver.Common.targets" />
 </Project>

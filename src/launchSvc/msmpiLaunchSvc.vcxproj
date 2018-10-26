@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(EnvironmentConfig)" />
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(SrcRoot)\mpi.props" />
 
   <PropertyGroup Label="Globals">
@@ -12,15 +12,13 @@
     <AssemblyDescription>Microsoft MPI Launch Service</AssemblyDescription>
   </PropertyGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.Default.props" />
-
   <PropertyGroup Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>Application</ConfigurationType>
   </PropertyGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="$(PUBLIC_WDK)\build\WindowsDriver.Default.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(WDKContentRoot)\build\WindowsDriver.Default.props" />
 
   <ItemDefinitionGroup>
     <ClCompile>
@@ -49,12 +47,12 @@
   </ItemDefinitionGroup>
 
   <ItemGroup>
-    <ProjectReference Condition="'$(BuildFromTopDir)'!='1'" Include="$(MPI_SRC_ROOT)\stub\project.vcxproj" />
-    <ProjectReference Condition="'$(BuildFromTopDir)'!='1'" Include="$(MPI_SRC_ROOT)\common\project.vcxproj" />
-    <ProjectReference Condition="'$(BuildFromTopDir)'!='1'" Include="$(MPI_SRC_ROOT)\msmpi\dll\project.vcxproj" />
-    <Link Condition="'$(BuildFromTopDir)'=='1'" Include="$(BinariesBuildTypeArchDirectory)\mpicommon\mpicommon.lib"/>
-    <Link Condition="'$(BuildFromTopDir)'=='1'" Include="$(BinariesBuildTypeArchDirectory)\mpistub\mpistub.lib"/>
-    <Link Condition="'$(BuildFromTopDir)'=='1'" Include="$(BinariesBuildTypeArchDirectory)\msmpi\msmpi.lib"/>
+    <ProjectReference Include="$(MPI_SRC_ROOT)\stub\mpistub.vcxproj" />
+    <ProjectReference Include="$(MPI_SRC_ROOT)\common\mpicommon.vcxproj" />
+    <ProjectReference Include="$(MPI_SRC_ROOT)\msmpi\dll\msmpi.vcxproj" />
+    <Link Include="$(OutDir)\..\mpicommon\mpicommon.lib"/>
+    <Link Include="$(OutDir)\..\mpistub\mpistub.lib"/>
+    <Link Include="$(OutDir)\..\msmpi\msmpi.lib"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -76,6 +74,6 @@
     </RoboCopy>
   </ItemGroup>
 
-  <Import Project="$(ExtendedTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="$(PkgWindowsSdk_Corext)\build\WindowsDriver.Common.targets" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(WDKContentRoot)\build\WindowsDriver.Common.targets" />
 </Project>
