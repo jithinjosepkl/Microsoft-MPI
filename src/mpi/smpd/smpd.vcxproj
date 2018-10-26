@@ -83,10 +83,12 @@
     <ClCompile Include=".\smpd_handle_command.cpp" />
     <ClCompile Include=".\smpd_launch_process.cpp" />
     <ClCompile Include=".\smpd_redirect.cpp" />
-
-    <RoboCopy Include="$(OutDir)\$(TargetFileName)">
-      <DestinationFolder>$(MPI_FULL_TEST_DESTINATION)</DestinationFolder>
-    </RoboCopy>
   </ItemGroup>
+
+  <PropertyGroup>
+    <StagingOutputPath>$(MPI_BIN_DESTINATION)</StagingOutputPath>
+    <OutFileType>*.exe</OutFileType>
+  </PropertyGroup>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

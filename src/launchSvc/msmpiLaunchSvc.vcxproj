@@ -49,10 +49,8 @@
   <ItemGroup>
     <ProjectReference Include="$(MPI_SRC_ROOT)\stub\mpistub.vcxproj" />
     <ProjectReference Include="$(MPI_SRC_ROOT)\common\mpicommon.vcxproj" />
-    <ProjectReference Include="$(MPI_SRC_ROOT)\msmpi\dll\msmpi.vcxproj" />
     <Link Include="$(OutDir)\..\mpicommon\mpicommon.lib"/>
     <Link Include="$(OutDir)\..\mpistub\mpistub.lib"/>
-    <Link Include="$(OutDir)\..\msmpi\msmpi.lib"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -68,11 +66,12 @@
     <ClCompile Include=".\msmpilaunchsvc.cpp" />
     <ClCompile Include=".\launchsvcmain.cpp" />
     <ResourceCompile Include="$(O)\launchsvcmsg.rc" />
-
-    <RoboCopy Include="$(OutDir)\$(TargetFileName)">
-      <DestinationFolder>$(MPI_BIN_OUTPUT_DESTINATION)</DestinationFolder>
-    </RoboCopy>
   </ItemGroup>
+
+  <PropertyGroup>
+    <StagingOutputPath>$(MPI_BIN_DESTINATION)</StagingOutputPath>
+    <OutFileType>*.exe</OutFileType>
+  </PropertyGroup>
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(WDKContentRoot)\build\WindowsDriver.Common.targets" />

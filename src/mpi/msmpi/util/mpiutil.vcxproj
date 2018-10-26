@@ -8,8 +8,6 @@
     <ProjectGuid>{74f3aa9a-087a-42bc-a273-41947640734c}</ProjectGuid>
   </PropertyGroup>
 
-  <Import Project="$(WDKContentRoot)\build\WindowsDriver.Default.props" />
-
   <PropertyGroup Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -43,7 +41,6 @@
   </ItemGroup>
 
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="$(WDKContentRoot)\build\WindowsDriver.Common.targets" />
 
   <ItemGroup>
     <ProjectReference Include="$(MPI_SRC_ROOT)\common\traceManifest.vcxproj" />

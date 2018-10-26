@@ -6,11 +6,10 @@
     <NO_MPICH_DLL>true</NO_MPICH_DLL>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(NO_AMD64_LIB)'==''">
-    <RoboCopy Include="$(OutDir)\$(TargetName).lib">
-      <DestinationFolder>$(BinariesBuildTypeArchDirectory)\$(MPI_SDK_DESTINATION)\lib</DestinationFolder>
-    </RoboCopy>
-  </ItemGroup>
+  <PropertyGroup>
+    <StagingOutputPath>$(MPI_SDK_DESTINATION)\lib</StagingOutputPath>
+    <OutFileType>*.lib</OutFileType>
+  </PropertyGroup>
 
   <PropertyGroup>
     <CL_Exe>cl.exe</CL_Exe>

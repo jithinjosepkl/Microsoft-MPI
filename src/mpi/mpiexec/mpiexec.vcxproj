@@ -56,6 +56,11 @@
     </Link>
   </ItemDefinitionGroup>
 
+  <PropertyGroup>
+    <StagingOutputPath>$(MPI_BIN_DESTINATION)</StagingOutputPath>
+    <OutFileType>*.exe</OutFileType>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="$(MPI_SRC_ROOT)\common\mpicommon.vcxproj" />
     <ProjectReference Include="$(MPI_SRC_ROOT)\pmilib\lib\pmilib.vcxproj" />
@@ -75,10 +80,7 @@
     <ClCompile Include=".\mpiexec_start_mgr.cpp" />
     <ClCompile Include=".\mp_parse_command_line.cpp" />
     <ClCompile Include=".\smpd_host_util.cpp" />
-
-    <RoboCopy Include="$(OutDir)\$(TargetFileName)">
-      <DestinationFolder>$(MPI_BIN_OUTPUT_DESTINATION)</DestinationFolder>
-    </RoboCopy>
   </ItemGroup>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
