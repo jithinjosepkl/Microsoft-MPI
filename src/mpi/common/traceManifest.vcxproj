@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A697D69E-7F67-457F-9194-267C73C5B8CF}</ProjectGuid>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(SrcRoot)\mpi.props" />
-
   <PropertyGroup Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>None</ConfigurationType>
     <IntDirSharingDetected>None</IntDirSharingDetected>
   </PropertyGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <Import Project="$(WDKContentRoot)\build\WindowsDriver.Default.props" />
-
   <ItemGroup>
     <MessageCompile Include="$(MPI_SRC_ROOT)\common\mpitrace.man">
       <GeneratedHeaderPath>true</GeneratedHeaderPath>
@@ -24,8 +24,6 @@
       <RemoveCharsFromSymbolName>EVENT_</RemoveCharsFromSymbolName>
     </MessageCompile>
   </ItemGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(WDKContentRoot)\build\WindowsDriver.Common.targets" />
-
 </Project>
