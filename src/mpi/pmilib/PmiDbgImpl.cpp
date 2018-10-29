@@ -314,7 +314,7 @@ void LoadPmiDbgExtensions( PMIDBG_HOST_TYPE hostType )
         //
         OACR_WARNING_SUPPRESS(28752, "SMPD uses only ANSI character set.");
         OACR_REVIEWED_CALL(
-            anhvo,
+            mpicr,
             hModule = LoadLibraryExA( path, nullptr, 0 ) );
         if( hModule == NULL )
         {

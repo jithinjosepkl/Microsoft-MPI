@@ -42,7 +42,7 @@ smpd_translate_win_error(
 
     va_list list;
     va_start(list, prepend);
-    OACR_REVIEWED_CALL(robertpa,
+    OACR_REVIEWED_CALL(mpicr,
         n = FormatMessageW(
                 FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_MAX_WIDTH_MASK, // dwFlags
                 NULL,   // lpSource

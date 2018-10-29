@@ -348,7 +348,7 @@ MPIR_Err_create_code_valist(
             RaiseException( 0, 0, 0, nullptr );
         }
         __except( TakeDump( GetExceptionInformation(), dumpMode ) )
-        OACR_WARNING_SUPPRESS(EXCEPT_BLOCK_EMPTY,"lucasm: dump handler")
+        OACR_WARNING_SUPPRESS(EXCEPT_BLOCK_EMPTY,"mpicr: dump handler")
         {
         }
     }
@@ -660,7 +660,7 @@ get_error_string(
 
     int n;
     OACR_REVIEWED_CALL(
-        anhvo,
+        mpicr,
         n = FormatMessageW(
         FORMAT_MESSAGE_ALLOCATE_BUFFER |
         FORMAT_MESSAGE_FROM_SYSTEM |

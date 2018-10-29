@@ -198,7 +198,7 @@ HRESULT smpd_start_win_mgr(smpd_context_t* context, int dbg_state)
         }
 
         OACR_REVIEWED_CALL(
-            anhvo,
+            mpicr,
             status = RpcImpersonateClient( context->hClientBinding ) );
         if( status != RPC_S_OK )
         {

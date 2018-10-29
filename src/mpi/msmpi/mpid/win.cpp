@@ -4301,7 +4301,7 @@ static MPI_RESULT FlushPassiveTarget(int dest, MPID_Win *win_ptr, bool unlock)
         // sent in a single packet. Otherwise, we send a separate lock
         // request first.
         //
-        // TODO: annalabu: add one op optimization for Get_Accumulate and
+        // TODO: mpicr: add one op optimization for Get_Accumulate and
         // Compare_and_swap
         //
         type_size = fixme_cast<int>(first_rma_op->origin_datatype.GetSize());
@@ -4638,7 +4638,7 @@ MPI_RESULT MPID_Win_unlock_all(MPID_Win *win_ptr)
     ON_ERROR_FAIL(mpi_errno);
 
     //
-    // TODO: annalabu: check if it is really needed
+    // TODO: mpicr: check if it is really needed
     //
     //mpi_errno = MPID_Progress_pump();
 

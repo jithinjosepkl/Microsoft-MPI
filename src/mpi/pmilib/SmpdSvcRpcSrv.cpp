@@ -119,7 +119,7 @@ RpcSrvCreateSmpdSvcContext(
     {
         RPC_STATUS rpcResult;
         OACR_REVIEWED_CALL(
-            anhvo,
+            mpicr,
             rpcResult = RpcImpersonateClient(pSmpdContext->hClientBinding) );
         if (rpcResult != RPC_S_OK)
         {

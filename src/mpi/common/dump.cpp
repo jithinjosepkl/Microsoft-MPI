@@ -179,7 +179,7 @@ CreateTempDumpFile(
 
     HMODULE hDbgHelp;
     OACR_REVIEWED_CALL(
-        anhvo,
+        mpicr,
         hDbgHelp = LoadLibraryExW( path, nullptr, 0 ) );
     if( hDbgHelp == NULL )
     {

@@ -39,7 +39,7 @@ mpiexec_print_hwnode(
     if( HWNODE_TYPE_MACHINE == type )
     {
         MPIU_Snprintf(format,_countof(format),L"%%%ds %%c %%%ds %%.6d %%.6d                                       %%s\n",type, HWNODE_TYPE_MAX-type);
-        OACR_REVIEWED_CALL(robertpa,
+        OACR_REVIEWED_CALL(mpicr,
             wprintf( format,
                      L"",
                      g_HwNodeChars[type] ,
@@ -52,7 +52,7 @@ mpiexec_print_hwnode(
     else
     {
         MPIU_Snprintf(format,_countof(format),L"%%%ds %%c %%%ds %%.6d %%.6d %%.3d %%.16I64x %%.16I64x\n",type, HWNODE_TYPE_MAX-type);
-        OACR_REVIEWED_CALL(robertpa,
+        OACR_REVIEWED_CALL(mpicr,
             wprintf( format,
                      L"",
                      g_HwNodeChars[type] ,
