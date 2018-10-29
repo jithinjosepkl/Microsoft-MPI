@@ -100,6 +100,7 @@
   <PropertyGroup>
     <TrackFileAccess>false</TrackFileAccess>
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <WDKCONTENTROOT Condition="'$(WDKCONTENTROOT)'==''">$(WindowsSdkDir)</WDKCONTENTROOT>
 
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     <CharacterSet>NotSet</CharacterSet>

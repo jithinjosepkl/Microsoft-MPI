@@ -44,7 +44,8 @@ Earlier versions of MS-MPI are available from the [Microsoft Download Center](ht
  - [Windows WDK](https://docs.microsoft.com/windows-hardware/drivers/download-the-wdk)
  - [GFortran](http://mingw-w64.org/doku.php)
     - Update _GFORTRAN_BIN_ in Derectory.Build.props to the install location of GFortran
- 
+ - [Perl](https://www.perl.org/get.html#win32)
+
  Based on the installed VS/SDK/WDK versions, update _VCToolsVersion_ and _WindowsTargetPlatformVersion_ in Directory.Build.props
  
  ## Build
