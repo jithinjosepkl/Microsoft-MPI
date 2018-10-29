@@ -1,6 +1,7 @@
-/*++
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-Copyright (c) Microsoft Corporation.  All rights reserved.
+/*++
 
 slist.h - Simple thread-safe singly linked list.  Lighter weight than
   OS provided SLIST, as it doesn't attempt to provide a useless depth.

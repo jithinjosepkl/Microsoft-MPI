@@ -1,8 +1,7 @@
-/*
- *
- *  (C) Microsoft Corp.
- *      See COPYRIGHT in top-level directory.
- */
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+
 #include "precomp.h"
 #include "winsock2.h"
 

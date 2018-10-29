@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+#
 #
 # This file maps each MPI error class to a short name form.  
 # This is used to support MPI_Error_string when applied to one of the

@@ -1,6 +1,6 @@
-/*
- *  (C) Microsoft Corporation
- */
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "mpiimpl.h"
 #include "mpi_fortlogical.h"
 #include "nmpi.h"

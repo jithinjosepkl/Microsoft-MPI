@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include <windows.h>
 #include "assertutil.h"
 #include <mpi.h>

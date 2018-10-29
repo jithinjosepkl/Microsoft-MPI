@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "mpiexec.h"
 
 const wchar_t g_HwNodeChars[] = L"MGNPL";

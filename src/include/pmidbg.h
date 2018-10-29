@@ -1,9 +1,9 @@
 #pragma once
 #ifndef _PmiDbg_H
 #define _PmiDbg_H
-//-----------------------------------------------------------------------------
-// Copyright (c) Microsoft Corporation.  All rights reserved.
-//-----------------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+//
 // Summary:
 // This header provides the extensions interface for the MSMPI Process
 // Management Interface (PMI) for debuggers and profiling tools.

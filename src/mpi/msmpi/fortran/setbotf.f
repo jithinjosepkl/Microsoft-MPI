@@ -1,5 +1,8 @@
 C     -*- Mode: Fortran; -*-
 C
+C     Copyright (c) Microsoft Corporation. All rights reserved.
+C     Licensed under the MIT License.
+C
 C     (C) 2001 by Argonne National Laboratory.
 C     (C) Microsoft Corporation
 C     See COPYRIGHT in top-level directory.

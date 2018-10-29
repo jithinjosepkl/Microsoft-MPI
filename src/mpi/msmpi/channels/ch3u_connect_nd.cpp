@@ -1,6 +1,7 @@
-/*++
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-Copyright (c) Microsoft Corporation.  All rights reserved.
+/*++
 
 ch3_connect_nd.c - Network Direct MPI CH3 Channel connection
                    related functionality.

@@ -1,6 +1,6 @@
-//
-// (C) 2014 by Microsoft Corporation.
-//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #ifndef STATUS_H_INCLUDED
 #define STATUS_H_INCLUDED
 

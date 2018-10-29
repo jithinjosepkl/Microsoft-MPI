@@ -1,6 +1,6 @@
 /*
-*  (C) 2015 by Microsoft Corporation.
-*      See COPYRIGHT in top-level directory.
+* Copyright (c) Microsoft Corporation. All rights reserved.
+* Licensed under the MIT License.
 *
 *  This file includes declarations of utility classes:
 *       Windows Event Logger Utilities

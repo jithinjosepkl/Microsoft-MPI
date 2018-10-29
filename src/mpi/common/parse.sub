@@ -1,5 +1,8 @@
 #! /usr/bin/perl
 #
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+#
 # File of useful routines use to process the MPI source files.  This is 
 # included by routines that process parameters and error messages, along with
 # tools to check for proper usage (such as system routines and preprocessor

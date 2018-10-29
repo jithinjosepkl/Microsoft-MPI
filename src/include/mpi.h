@@ -1,4 +1,7 @@
 /*
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ *
  *  (C) 2001 by Argonne National Laboratory.
  *  (C) 2015 by Microsoft Corporation.
  *

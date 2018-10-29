@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 /*
  *  (C) 2001 by Argonne National Laboratory.
  *      See COPYRIGHT in top-level directory.
@@ -7,7 +10,7 @@
 
 
 //
-// ANH TODO: Need to investigate the return path of this function
+// TODO: Need to investigate the return path of this function
 // It seems like mpiexec_handle_abort does not return a result
 //
 static DWORD

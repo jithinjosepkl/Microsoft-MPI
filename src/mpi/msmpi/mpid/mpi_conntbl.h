@@ -1,4 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 //
 // Connectivity Table: collects and prints information about how processes
 // connected to one another (SHM, SOCK, ND.)

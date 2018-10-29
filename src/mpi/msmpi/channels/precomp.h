@@ -1,6 +1,7 @@
-/*++
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-Copyright (c) Microsoft Corporation.  All rights reserved.
+/*++
 
 precomp.h - Network Direct MPI CH3 Channel precompiled header
 

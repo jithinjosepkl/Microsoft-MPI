@@ -1,4 +1,7 @@
-/* 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+/*
  *
  *
  *   Copyright (C) 1997 University of Chicago. 

@@ -1,6 +1,7 @@
 /*++
 
-Copyright (c) Microsoft Corporation.  All rights reserved.
+ Copyright (c) Microsoft Corporation. All rights reserved.
+ Licensed under the MIT License.
 
 mpi_api.h - Defines MPI API support routines, used internally to the API layer,
             such as error checking, etc.

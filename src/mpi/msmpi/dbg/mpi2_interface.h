@@ -1,4 +1,7 @@
-/*  
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+/*
  *  (C) 2007 by Argonne National Laboratory.
  *      See COPYRIGHT in top-level directory.
  */

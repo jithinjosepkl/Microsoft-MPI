@@ -1,7 +1,7 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
-/*
- *  (C) Microsoft Corporation
- */
 
 /* Handle different mechanisms for passing Fortran CHARACTER to routines */
 #ifdef USE_FORT_MIXED_STR_LEN
