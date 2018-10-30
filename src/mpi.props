@@ -119,8 +119,7 @@
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <DisableSpecificWarnings>
-        4986;4987;4471;4369;4309;4603;4627;
-        6287;26495;6001;26451;28020;6385;6101;28252
+        4986;4987;4471;4369;4309;4603;4627
       </DisableSpecificWarnings>
       <FloatingPointModel Condition="'$(BuildArchitecture)'=='i386'">Strict</FloatingPointModel>
       <CallingConvention Condition="'$(BuildArchitecture)'=='i386'">stdcall</CallingConvention>
