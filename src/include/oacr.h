@@ -12,6 +12,7 @@
 #define PRINTF_FORMAT_STRING_PARAM_NEEDS_REVIEW 25141
 #define UNSAFE_STRING_FUNCTION 25025
 #define USE_WIDE_API 25068
+#define DIFFERENT_PARAM_TYPE_SIZE 25054
 
 #define OACR_REVIEWED_CALL( reviewer, functionCall ) functionCall
 #define OACR_WARNING_SUPPRESS( cWarning, comment ) __pragma ( warning( suppress: cWarning ) )

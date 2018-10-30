@@ -4,13 +4,12 @@
   <Import Project="$(SrcRoot)\mpi.props" />
 
   <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)lib\mpifort.vcxproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)msmpifec\msmpifec.vcxproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)msmpifes\msmpifes.vcxproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)msmpifmc\msmpifmc.vcxproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)msmpifms\msmpifms.vcxproj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)lib\mpifort.vcxproj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)msmpifec\msmpifec.vcxproj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)msmpifes\msmpifes.vcxproj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)msmpifmc\msmpifmc.vcxproj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)msmpifms\msmpifms.vcxproj" />
   </ItemGroup>
 
-  <Import Project="$(MSBuildBinPath)\Microsoft.Common.targets" />
   <Import Project="$(TraversalTargets)" Condition=" '$(CBTModulesRestored)' == 'true' " />
 </Project>

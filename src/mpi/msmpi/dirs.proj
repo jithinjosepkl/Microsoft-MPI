@@ -4,14 +4,14 @@
   <Import Project="$(SrcRoot)\mpi.props" />
 
   <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)api\mpiapi.vcxproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)channels\mpichannels.vcxproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)dbg\mpi_debugger.vcxproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)dll\msmpi.vcxproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)fortran\dirs.proj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)io\mpiio.vcxproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)mpid\mpid.vcxproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)util\mpiutil.vcxproj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)api\mpiapi.vcxproj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)channels\mpichannels.vcxproj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)dbg\mpi_debugger.vcxproj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)dll\msmpi.vcxproj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)fortran\dirs.proj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)io\mpiio.vcxproj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)mpid\mpid.vcxproj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)util\mpiutil.vcxproj" />
   </ItemGroup>
 
   <Import Project="$(TraversalTargets)" Condition=" '$(CBTModulesRestored)' == 'true' " />

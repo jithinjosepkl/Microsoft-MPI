@@ -4,8 +4,8 @@
   <Import Project="$(SrcRoot)\mpi.props" />
 
   <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)cli\pmicli.vcxproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)lib\pmilib.vcxproj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)cli\pmicli.vcxproj" />
+    <ProjectFile Include="$(MSBuildThisFileDirectory)lib\pmilib.vcxproj" />
   </ItemGroup>
 
   <Import Project="$(TraversalTargets)" Condition=" '$(CBTModulesRestored)' == 'true' " />

@@ -52,7 +52,7 @@ Note that the build system uses [CommonBuildToolSet(CBT)](https://commonbuildtoo
 
 
 ## Build
-To build, open a __Native Tools Command Prompt for Visual Studio__ and  run ``msbuild src\msmpi.sln`` from root folder.
+To build, open a __Native Tools Command Prompt for Visual Studio__ and  run ``msbuild`` from root folder.
 
 # Contributing
 
