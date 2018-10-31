@@ -25,6 +25,7 @@
         $(MPI_SRC_ROOT)\msmpi\include;
         .\$(O)
       </AdditionalIncludeDirectories>
+      <AdditionalOptions>/analyze:stacksize 32048 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Midl>
       <StructMemberAlignment>8</StructMemberAlignment>
@@ -38,6 +39,8 @@
       <DefaultCharType>unsigned</DefaultCharType>
       <AdditionalOptions>/prefix all RpcCli /prefix server RpcSrv /ms_ext /c_ext /no_stamp /no_settings_comment /lcid 1033 -sal -target NT60 /acf $(MPI_SRC_ROOT)\pmilib\SmpdRpc.acf /sstub $(MPI_SRC_ROOT)\pmilib\lib\$(O)\smpdrpc_s.c</AdditionalOptions>
       <DisableSpecificWarnings>1007;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <SuppressCompilerWarnings>true</SuppressCompilerWarnings>
+      <WarningLevel></WarningLevel>
     </Midl>
   </ItemDefinitionGroup>
 

@@ -30,6 +30,7 @@
         $(MPI_SRC_ROOT)\pmilib\lib\$(O);
         .\$(O)
       </AdditionalIncludeDirectories>
+      <AdditionalOptions>/analyze:stacksize 32924 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
 

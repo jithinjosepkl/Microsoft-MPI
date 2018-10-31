@@ -361,6 +361,7 @@ HRESULT FindBizCardsNode(
         pBizCardsNode = new smpd_process_biz_cards_t;
         if (pBizCardsNode == nullptr)
         {
+            LeaveCriticalSection(&smpd_process.svcCriticalSection);
             return E_OUTOFMEMORY;
         }
         pBizCardsNode->kvs = kvs;
@@ -369,6 +370,7 @@ HRESULT FindBizCardsNode(
         if (pBizCardsNode->ppBizCards == nullptr)
         {
             delete pBizCardsNode;
+            LeaveCriticalSection(&smpd_process.svcCriticalSection);
             return E_OUTOFMEMORY;
         }
         ZeroMemory(pBizCardsNode->ppBizCards, nprocs * sizeof(char*));
