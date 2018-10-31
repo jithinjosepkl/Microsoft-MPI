@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{A697D69E-7F67-457F-9194-267C73C5B8CF}</ProjectGuid>
+    <ProjectGuid>{8E3235C8-9024-4915-BFA6-8F79FFAEC14A}</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(SrcRoot)\mpi.props" />
-  <PropertyGroup Label="Configuration">
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <ConfigurationType>None</ConfigurationType>
-    <PlatformToolset>WindowsUserModeDriver10.0</PlatformToolset>
-    <IntDirSharingDetected>None</IntDirSharingDetected>
+  <PropertyGroup>
+    <AssemblyDescription>Microsoft MPI Launch Service</AssemblyDescription>
   </PropertyGroup>
-
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>None</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>WindowsUserModeDriver10.0</PlatformToolset>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-
   <ItemGroup>
-    <MessageCompile Include="$(MPI_SRC_ROOT)\common\mpitrace.man">
+    <MessageCompile Include="launchsvcmsg.mc">
       <GeneratedHeaderPath>true</GeneratedHeaderPath>
-      <HeaderFilePath>$(MPI_SRC_ROOT)\common\$(O)</HeaderFilePath>
+      <HeaderFilePath>$(SrcRoot)\launchsvc\$(O)</HeaderFilePath>
       <GeneratedRCAndMessagesPath>true</GeneratedRCAndMessagesPath>
-      <RCFilePath>$(MPI_SRC_ROOT)\common\$(O)</RCFilePath>
-      <GeneratedFilesBaseName>MpiTraceEvents</GeneratedFilesBaseName>
-      <GenerateUserModeLoggingMacros>true</GenerateUserModeLoggingMacros>
-      <PrefixMacroName>Trace</PrefixMacroName>
-      <RemoveCharsFromSymbolName>EVENT_</RemoveCharsFromSymbolName>
+      <RCFilePath>$(SrcRoot)\launchsvc\$(O)</RCFilePath>
     </MessageCompile>
   </ItemGroup>
+  <PropertyGroup>
+    <StagingOutputPath>$(MPI_BIN_DESTINATION)</StagingOutputPath>
+    <OutFileType>*.exe</OutFileType>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

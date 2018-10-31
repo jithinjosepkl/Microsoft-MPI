@@ -43,6 +43,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "smpd", "mpi\smpd\smpd.vcxpr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mpistub", "mpi\stub\mpistub.vcxproj", "{0D6DC55B-D3F8-4D0B-B04D-4F6B6980639A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "msmpiLaunchSvcMc", "launchSvc\msmpiLaunchSvcMc.vcxproj", "{8E3235C8-9024-4915-BFA6-8F79FFAEC14A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -211,6 +213,18 @@ Global
 		{0D6DC55B-D3F8-4D0B-B04D-4F6B6980639A}.Release|x64.Build.0 = Release|x64
 		{0D6DC55B-D3F8-4D0B-B04D-4F6B6980639A}.Release|x86.ActiveCfg = Release|x86
 		{0D6DC55B-D3F8-4D0B-B04D-4F6B6980639A}.Release|x86.Build.0 = Release|x86
+		{8E3235C8-9024-4915-BFA6-8F79FFAEC14A}.Debug|x64.ActiveCfg = Debug|x64
+		{8E3235C8-9024-4915-BFA6-8F79FFAEC14A}.Debug|x64.Build.0 = Debug|x64
+		{8E3235C8-9024-4915-BFA6-8F79FFAEC14A}.Debug|x64.Deploy.0 = Debug|x64
+		{8E3235C8-9024-4915-BFA6-8F79FFAEC14A}.Debug|x86.ActiveCfg = Debug|x86
+		{8E3235C8-9024-4915-BFA6-8F79FFAEC14A}.Debug|x86.Build.0 = Debug|x86
+		{8E3235C8-9024-4915-BFA6-8F79FFAEC14A}.Debug|x86.Deploy.0 = Debug|x86
+		{8E3235C8-9024-4915-BFA6-8F79FFAEC14A}.Release|x64.ActiveCfg = Release|x64
+		{8E3235C8-9024-4915-BFA6-8F79FFAEC14A}.Release|x64.Build.0 = Release|x64
+		{8E3235C8-9024-4915-BFA6-8F79FFAEC14A}.Release|x64.Deploy.0 = Release|x64
+		{8E3235C8-9024-4915-BFA6-8F79FFAEC14A}.Release|x86.ActiveCfg = Release|x86
+		{8E3235C8-9024-4915-BFA6-8F79FFAEC14A}.Release|x86.Build.0 = Release|x86
+		{8E3235C8-9024-4915-BFA6-8F79FFAEC14A}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
