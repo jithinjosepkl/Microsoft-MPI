@@ -25,6 +25,7 @@
         %(AdditionalIncludeDirectories);
         $(MPI_SRC_ROOT)\common\$(O);
       </AdditionalIncludeDirectories>
+      <AdditionalOptions>/analyze:stacksize 32788 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
 
